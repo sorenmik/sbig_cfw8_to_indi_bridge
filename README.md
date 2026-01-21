@@ -11,7 +11,24 @@ This approach reuses the existing XAGYL driver already available in INDI.
 
 **NOTE:** The Arduino reset on serial DTR sometime causes INDI to have to retry the first time it connects. [Hardware fix](https://forum.arduino.cc/t/disable-auto-reset-by-serial-connection/28248/9).
 
----
+
+### Connections
+
+The filter wheel requires two signal connections to the Arduino and two connections for power:
+
+| DB-9 Pin | Wire Color    | Signal / Function                 | Arduino / Notes                   |
+|----------|---------------|-----------------------------------|-----------------------------------|
+| 1        | Green         | Move Complete                     | Connect to Arduino D2             |
+| 2        | White         | Pulse Input                       | Connect to Arduino D3             |
+| 8        | Red           | +12VDC Regulated Input (~300 mA)  | Power supply input                |
+| 5        | Purple        | Ground                            | Common ground                     |
+
+**Note:** Wire colors may vary between units. Always verify the DB-9 pinout and wire colors before making connections.
+
+**Note:** The resistors shown in the picture are for voltage sensing inside the Arduino and are not required.
+
+
+### Protocol documentation
 
 [SBIG protocol](docs/cfw8.hardware.pdf)
 

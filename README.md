@@ -21,7 +21,7 @@ The filter wheel requires two signal connections to the Arduino and two connecti
 | 1        | Green         | Move Complete                     | Connect to Arduino D2             |
 | 2        | White         | Pulse Input                       | Connect to Arduino D3             |
 | 8        | Red           | +12VDC Regulated Input (~300 mA)  | Power supply input                |
-| 5        | Purple        | Ground                            | Common ground                     |
+| 5        | Purple        | GND                               | Common GND + Arduino GND          |
 
 **Note:** Wire colors may vary between units. Always verify the DB-9 pinout and wire colors before making connections.
 

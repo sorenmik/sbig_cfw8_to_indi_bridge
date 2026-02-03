@@ -5,7 +5,8 @@ SKETCH_DIR="filterwheel"
 FQBN="Seeeduino:samd:seeed_XIAO_m0"
 PORT="/dev/ttyACM0"
 
-PATH="$PATH:/home/spiff/Programs/Arduino IDE/bin"
+# TODO: Set path to Arduino IDE bin folder if arduino-cli is not in PATH
+PATH="$PATH:/PATH/to/Arduino IDE/bin"
 
 
 # # One time install

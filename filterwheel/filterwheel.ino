@@ -1,21 +1,19 @@
 // Pins
-#define PIN_MOVE_COMPLETE 2
-#define PIN_PULSE 3
-#define PIN_SUPPLY_VOLTAGE A7
+#define PIN_MOVE_COMPLETE 9
+#define PIN_PULSE 7
 
 // Settings
 #define PULSE_TRAIN_WIDTH_MS 1000
-#define SUPPLY_VOLTAGE_CUTOFF_V 11.0
 #define NO_FILTER_SLOTS 5
 
 // Logic
 unsigned long _time;
-int _current_pos = 1;
+int _current_pos = -1;
 volatile bool _is_moving = false;
 
 // Constants
 const String I_Strings[] = {
-  "Smikkelsen_FilterWheel_1.0", 
+  "Smikkelsen_FilterWheel_2.0", 
   "FW3.1.5", 
   "P", 
   "S/N:001", 
@@ -28,7 +26,7 @@ const String I_Strings[] = {
   };
 
 // Pulse widths per filter position (µs)
-const int PULSE_WIDTHS[NO_FILTER_SLOTS] = {
+const int PULSE_WIDTHS[NO_FILTER_SLOTS] ={
   500,   // Position 1
   800,   // Position 2
   1100,  // Position 3
@@ -49,7 +47,9 @@ void setup()
   
   _time = millis();
   
-  MoveToPos(_current_pos);
+  // Move to position 1 at startup
+  MoveToPos(1);
+  SendSerial("P" + String(_current_pos));
 }
 
 void loop()
@@ -116,25 +116,12 @@ void MoveToPos(int pos)
     return;
   }
 
-  // TODO: Check wheel 12V supply is OK -> Will cause EKOS to crash on connection without 12V...
-  // float voltage = GetSupplyVoltage();
-  // if (voltage < SUPPLY_VOLTAGE_CUTOFF_V)
-  // {
-  //   SendSerial("Supply voltage too low: " + String(voltage));
-  //   return;
-  // }
-
   // All seems ok:
   int pos_result = SendPulseTrain(pos);
 
   // Wait until pos is reached, and then update _current_pos
   while (_is_moving) delay(1);
   _current_pos = pos_result;
-}
-
-float GetSupplyVoltage()
-{
-  return (15.0/1023.0)*analogRead(PIN_SUPPLY_VOLTAGE);
 }
 
 void MovePinInterrupt()
@@ -189,8 +176,6 @@ void SendSerial (String message)
 {
   Serial.println(message);
 }
-
-void(* resetFunc) (void) = 0;
 
 int PositionWrapper(int pos)
 {
@@ -259,19 +244,19 @@ void HandleSerial(char firstChar, char secondChar)
         break;
 
 
-      // Reset commands
+      // Reset commands [NOT IMPLEMENTED]
       case 'R':
         switch (number) 
         {
-          // R0/R1 reset arduino
+          // R0/R1 reset arduino [NOT IMPLEMENTED]
           case 0: 
           case 1:
-            resetFunc();
+            SendSerial("Reset");
             break;
 
           // R2 reset all offsets and move to home [NOT IMPLEMENTED]
           case 2: 
-            MoveToPos(1); // TODO: Should we home?
+            MoveToPos(1);
             SendSerial("Calibration Removed");
             break;
 

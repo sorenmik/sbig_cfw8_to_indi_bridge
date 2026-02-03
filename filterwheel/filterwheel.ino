@@ -120,6 +120,7 @@ void MoveToPos(int pos)
   int pos_result = SendPulseTrain(pos);
 
   // Wait until pos is reached, and then update _current_pos
+  // TODO: Define some timeout here. If wheel is not powered/working, this will hang forever.
   while (_is_moving) delay(1);
   _current_pos = pos_result;
 }

@@ -3,8 +3,9 @@
 #define PIN_PULSE 7
 
 // Settings
-#define PULSE_TRAIN_WIDTH_MS 1000
-#define NO_FILTER_SLOTS 5
+constexpr unsigned long PULSE_TRAIN_WIDTH_MS = 1000UL;
+constexpr int           NO_FILTER_SLOTS      = 5;
+constexpr unsigned long TIMEOUT_MS           = 5000UL;
 
 // Logic
 unsigned long _time;
@@ -49,7 +50,6 @@ void setup()
   
   // Move to position 1 at startup
   MoveToPos(1);
-  SendSerial("P" + String(_current_pos));
 }
 
 void loop()
@@ -119,10 +119,25 @@ void MoveToPos(int pos)
   // All seems ok:
   int pos_result = SendPulseTrain(pos);
 
-  // Wait until pos is reached, and then update _current_pos
-  // TODO: Define some timeout here. If wheel is not powered/working, this will hang forever.
-  while (_is_moving) delay(1);
+  // Wait until position reached - with timeout
+  unsigned long start_wait = millis();
+  while (_is_moving && (millis() - start_wait) < TIMEOUT_MS)
+  {
+    delay(1);
+  }
+
+  // ERROR: Timed out waiting for move completion
+  if (_is_moving)
+  {
+    SendSerial("P0");
+    SendSerial("Move timeout after " + String(TIMEOUT_MS) + " ms");
+    return;
+  }
+
+  // Update current position
   _current_pos = pos_result;
+  SendSerial("P" + String(_current_pos));
+
 }
 
 void MovePinInterrupt()
@@ -196,21 +211,18 @@ void HandleSerial(char firstChar, char secondChar)
       // Move backwards X slots (ASCOM)
       case 'B':
         MoveToPos(PositionWrapper(_current_pos - number));
-        SendSerial("P" + String(_current_pos));
         break;
         
 
       // Move forwards X slots (ASCOM)
       case 'F':
         MoveToPos(PositionWrapper(_current_pos + number));
-        SendSerial("P" + String(_current_pos));
         break;
         
         
       // Go to position (INDI)
       case 'G':
         MoveToPos(number);
-        SendSerial("P" + String(_current_pos));
         break;
 
 
@@ -333,5 +345,3 @@ void HandleSerial(char firstChar, char secondChar)
         SendSerial("Command Unknown");
   }
 }
-
-

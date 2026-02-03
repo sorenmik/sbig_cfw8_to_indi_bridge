@@ -9,7 +9,7 @@ The Arduino:
 
 This approach reuses the existing XAGYL driver already available in INDI.
 
-**NOTE:** The Arduino reset on serial DTR sometime causes INDI to have to retry the first time it connects. [Hardware fix](https://forum.arduino.cc/t/disable-auto-reset-by-serial-connection/28248/9).
+**NOTE:** The Arduino reset on serial DTR sometime causes INDI to have to retry the first time it connects. [Hardware fix](https://forum.arduino.cc/t/disable-auto-reset-by-serial-connection/28248/9). The SAMD21 does not seem to have this issue.
 
 
 ### Connections

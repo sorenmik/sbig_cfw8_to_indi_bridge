@@ -21,11 +21,22 @@ The filter wheel requires two signal connections to the Arduino and two connecti
 | 1        | Green         | Move Complete                     | Connect to Arduino D2             |
 | 2        | White         | Pulse Input                       | Connect to Arduino D3             |
 | 8        | Red           | +12VDC Regulated Input (~300 mA)  | Power supply input                |
-| 5        | Purple        | GND                               | Common GND + Arduino GND          |
+| 5        | Purple/Black  | GND                               | Common GND + Arduino GND          |
 
 **Note:** Wire colors may vary between units. Always verify the DB-9 pinout and wire colors before making connections.
 
 **Note:** The resistors shown in the picture are for voltage sensing inside the Arduino and are not required.
+
+
+### TTL vs 3.3V systems
+
+If using SAMD21 or other 3.3V systems, the PIN_MOVE_COMPLETE must be protected using a voltage divider:
+
+    5V TTL ── 10k ──┬── SAMD21 GPIO
+                    |
+                 20k|
+                    |
+                   GND
 
 
 ### Protocol documentation

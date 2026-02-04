@@ -9,7 +9,7 @@ The Arduino:
 
 This approach reuses the existing XAGYL driver already available in INDI.
 
-**NOTE:** The Arduino reset on serial DTR sometime causes INDI to have to retry the first time it connects. [Hardware fix](https://forum.arduino.cc/t/disable-auto-reset-by-serial-connection/28248/9). The SAMD21 does not seem to have this issue.
+**NOTE:** The Arduino Nano reset on serial DTR sometime causes INDI to have to retry the first time it connects. [Hardware fix](https://forum.arduino.cc/t/disable-auto-reset-by-serial-connection/28248/9). The SAMD21 does not seem to have this issue.
 
 
 ### Connections
@@ -24,8 +24,6 @@ The filter wheel requires two signal connections to the Arduino and two connecti
 | 5        | Purple/Black  | GND                               | Common GND + Arduino GND          |
 
 **Note:** Wire colors may vary between units. Always verify the DB-9 pinout and wire colors before making connections.
-
-**Note:** The resistors shown in the picture are for voltage sensing inside the Arduino and are not required.
 
 
 ### TTL vs 3.3V systems
@@ -47,4 +45,6 @@ If using SAMD21 or other 3.3V systems, the PIN_MOVE_COMPLETE must be protected u
 
 ---
 
-![alt text](docs/pcb.jpg "PCB")
+![alt text](docs/v2_samd21_pcb.jpg "PCB")
+
+![alt text](docs/v2_samd21_a.jpg "Assembly")

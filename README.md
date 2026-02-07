@@ -16,14 +16,12 @@ This approach reuses the existing XAGYL driver already available in INDI.
 
 The filter wheel requires two signal connections to the Arduino and two connections for power:
 
-| DB-9 Pin | Wire Color   | Signal / Function                | Arduino / Notes                      |
-|----------|--------------|----------------------------------|--------------------------------------|
-| 1        | Green        | Move Complete                    | Connect to Arduino PIN_MOVE_COMPLETE |
-| 2        | White        | Pulse Input                      | Connect to Arduino PIN_PULSE         |
-| 8        | Red          | +12VDC Regulated Input (~300 mA) | Power supply input                   |
-| 5        | Purple/Black | GND                              | Common GND + Arduino GND             |
-
-**Note:** Wire colors may vary between units. Always verify the DB-9 pinout and wire colors before making connections.
+| DB-9 Pin | Wire Color | Signal / Function                | Arduino / Notes                      |
+|----------|------------|----------------------------------|--------------------------------------|
+| 1        | Green      | Move Complete                    | Connect to Arduino PIN_MOVE_COMPLETE |
+| 2        | White      | Pulse Input                      | Connect to Arduino PIN_PULSE         |
+| 8        | Red        | +12VDC Regulated Input (~300 mA) | Power supply input                   |
+| 5        | Black      | GND                              | Common GND + Arduino GND             |
 
 
 ### TTL vs 3.3V systems
